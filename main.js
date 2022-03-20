@@ -1,7 +1,7 @@
 let inputTituloReferencia = document.querySelector("#inputTitulo");
 let inputDescricaoReferencia = document.querySelector("#inputDescricao");
 let inputImagemReferencia = document.querySelector("#inputImagem");
-let botaoEnvioReferencia = document.querySelector("#botaoEnvio");
+let inputEnvioReferencia = document.querySelector("#inputEnvio");
 
 const Post = function (id, titulo, descricao, urlImagem) {
     this.titulo = titulo;
@@ -50,7 +50,7 @@ handleDelete = (e, index) => {
 
 renderizaSection(JSON.parse(sessionStorage.getItem("postagens")));
 
-botaoEnvioReferencia.addEventListener("click", event => {
+inputEnvioReferencia.addEventListener("click", event => {
     event.preventDefault();
     let titulo = inputTituloReferencia.value;
     let descricao = inputDescricaoReferencia.value;
