@@ -11,24 +11,25 @@ const Post = function (id, titulo, descricao, urlImagem) {
 }
 
 let postagens;  
-if (sessionStorage.getItem("postagens") == null) {
+if (localStorage.getItem("postagens") == null) {
     postagens = [new Post(0, "Título", "Descrição", "https://external-content.duckduckgo.com/iu/?u=http%3A%2F%2Fimg3.wikia.nocookie.net%2F__cb20131128234008%2Ftotal-movies%2Fimages%2F5%2F59%2FSheriff_Woody.1.jpg&f=1&nofb=1")]
-    sessionStorage.setItem("postagens", JSON.stringify(postagens))
+    localStorage.setItem("postagens", JSON.stringify(postagens))
 } else {
-    postagens = JSON.parse(sessionStorage.getItem("postagens"))
+    postagens = JSON.parse(localStorage.getItem("postagens"))
 }
 
 function renderizaSection(postagens) {
 
     let htmlDaSection = "";
 
-    for (post of postagens) {
+    for (let post of postagens) {
         let novoPost = 
         `
         <article>
             <img src=${post.urlImagem} alt="">
             <h2>${post.titulo}</h2>
             <p>${post.descricao}</p>
+            <button id=${post.id} class="deletar">Deletar</button>
         </article>
 
         `
@@ -38,17 +39,7 @@ function renderizaSection(postagens) {
     document.querySelector("#sectionPostagens").innerHTML = htmlDaSection;
 }
 
-handleDelete = (e, index) => {
-    const { tarefas } = this.state;
-    const novasTarefas = [...tarefas];
-    novasTarefas.splice(index, 1);
-
-    this.setState({
-      tarefas: [...novasTarefas],
-    });
-  }
-
-renderizaSection(JSON.parse(sessionStorage.getItem("postagens")));
+renderizaSection(JSON.parse(localStorage.getItem("postagens")));
 
 inputEnvioReferencia.addEventListener("click", event => {
     event.preventDefault();
@@ -60,8 +51,31 @@ inputEnvioReferencia.addEventListener("click", event => {
 
     postagens.unshift(novoPost);
 
-    sessionStorage.setItem("postagens", JSON.stringify(postagens))
+    localStorage.setItem("postagens", JSON.stringify(postagens))
 
-    renderizaSection(JSON.parse(sessionStorage.getItem("postagens")));
+    renderizaSection(JSON.parse(localStorage.getItem("postagens")));
 
 })
+
+let buttonDeletarReferencia = document.getElementsByClassName('deletar')
+
+console.log(buttonDeletarReferencia)
+
+handleDelete = (postagens) => {
+    let index = 0
+    for (let button of postagens) {
+        index = button.id
+    }
+
+    console.log(index)
+
+    // const { tarefas } = this.state;
+    // const novasTarefas = [...tarefas];
+    // novasTarefas.splice(index, 1);
+
+    // this.setState({
+    //   tarefas: [...novasTarefas],
+    // });
+}
+
+handleDelete(buttonDeletarReferencia)
