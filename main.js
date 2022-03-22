@@ -29,7 +29,7 @@ function renderizaSection(postagens) {
             <img src=${post.urlImagem} alt="">
             <h2>${post.titulo}</h2>
             <p>${post.descricao}</p>
-            <button id=${post.id} class="deletar">Deletar</button>
+            <button onclick="handleDelete(event)" id=${post.id} class="deletar">Deletar</button>
         </article>
 
         `
@@ -39,21 +39,22 @@ function renderizaSection(postagens) {
     document.querySelector("#sectionPostagens").innerHTML = htmlDaSection;
 }
 
-renderizaSection(JSON.parse(localStorage.getItem("postagens")));
+renderizaSection(postagens);
 
 inputEnvioReferencia.addEventListener("click", event => {
+
     event.preventDefault();
     let titulo = inputTituloReferencia.value;
     let descricao = inputDescricaoReferencia.value;
     let urlImagem = inputImagemReferencia.value;
-    let id = postagens[0].id + 1;
+    let id = (postagens.length !== 0) ? postagens[0].id + 1 : 0;
     let novoPost = new Post(id, titulo, descricao, urlImagem);
 
     postagens.unshift(novoPost);
 
     localStorage.setItem("postagens", JSON.stringify(postagens))
 
-    renderizaSection(JSON.parse(localStorage.getItem("postagens")));
+    renderizaSection(postagens);
 
 })
 
@@ -61,21 +62,18 @@ let buttonDeletarReferencia = document.getElementsByClassName('deletar')
 
 console.log(buttonDeletarReferencia)
 
-handleDelete = (postagens) => {
-    let index = 0
-    for (let button of postagens) {
-        index = button.id
+handleDelete = (event) => {
+    
+    let idDoPost = parseInt(event.path[0].id);
+    for (let i = 0; i < postagens.length; i++) {
+        if (postagens[i].id === idDoPost) {
+            postagens.splice(i, 1);
+            break;
+        }        
     }
 
-    console.log(index)
+    localStorage.setItem("postagens", JSON.stringify(postagens))
 
-    // const { tarefas } = this.state;
-    // const novasTarefas = [...tarefas];
-    // novasTarefas.splice(index, 1);
+    renderizaSection(postagens);
 
-    // this.setState({
-    //   tarefas: [...novasTarefas],
-    // });
 }
-
-handleDelete(buttonDeletarReferencia)
