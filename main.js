@@ -19,7 +19,6 @@ if (localStorage.getItem("postagens") == null) {
 }
 
 function renderizaSection(postagens) {
-
     let htmlDaSection = "";
 
     for (let post of postagens) {
@@ -29,7 +28,7 @@ function renderizaSection(postagens) {
             <img src=${post.urlImagem} alt="">
             <h2>${post.titulo}</h2>
             <p>${post.descricao}</p>
-            <button onclick="handleDelete(event)" id=${post.id} class="deletar">Deletar</button>
+            <button onclick="handleDelete(event)" id=${post.id}>Deletar</button>
         </article>
 
         `
@@ -42,8 +41,8 @@ function renderizaSection(postagens) {
 renderizaSection(postagens);
 
 inputEnvioReferencia.addEventListener("click", event => {
-
     event.preventDefault();
+
     let titulo = inputTituloReferencia.value;
     let descricao = inputDescricaoReferencia.value;
     let urlImagem = inputImagemReferencia.value;
@@ -53,27 +52,15 @@ inputEnvioReferencia.addEventListener("click", event => {
     postagens.unshift(novoPost);
 
     localStorage.setItem("postagens", JSON.stringify(postagens))
-
     renderizaSection(postagens);
-
 })
 
-let buttonDeletarReferencia = document.getElementsByClassName('deletar')
-
-console.log(buttonDeletarReferencia)
-
 handleDelete = (event) => {
-    
     let idDoPost = parseInt(event.path[0].id);
-    for (let i = 0; i < postagens.length; i++) {
-        if (postagens[i].id === idDoPost) {
-            postagens.splice(i, 1);
-            break;
-        }        
-    }
+    let index = postagens.findIndex((el) => el.id === idDoPost)
+
+    postagens.splice(index, 1)
 
     localStorage.setItem("postagens", JSON.stringify(postagens))
-
     renderizaSection(postagens);
-
 }
