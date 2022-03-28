@@ -16,7 +16,7 @@ const Post = function (id, titulo, descricao, urlImagem) {
 // Ou inicializa vazio, se não existe
 let postagens;  
 if (localStorage.getItem("postagens") == null) {
-    postagens = [new Post(0, "Título", "Descrição", "https://external-content.duckduckgo.com/iu/?u=http%3A%2F%2Fimg3.wikia.nocookie.net%2F__cb20131128234008%2Ftotal-movies%2Fimages%2F5%2F59%2FSheriff_Woody.1.jpg&f=1&nofb=1")]
+    postagens = []
     localStorage.setItem("postagens", JSON.stringify(postagens))
 } else {
     postagens = JSON.parse(localStorage.getItem("postagens"))
