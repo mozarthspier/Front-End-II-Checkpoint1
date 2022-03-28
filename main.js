@@ -1,3 +1,5 @@
+// Integrantes: Mozarth Spier, Henrique Arantes, Rafael Vilela
+
 let inputTituloReferencia = document.querySelector("#inputTitulo");
 let inputDescricaoReferencia = document.querySelector("#inputDescricao");
 let inputImagemReferencia = document.querySelector("#inputImagem");
@@ -10,6 +12,8 @@ const Post = function (id, titulo, descricao, urlImagem) {
     this.id = id;
 }
 
+// Inicializa o array de postagens com o conteúdo do localStorage, se esse já existe
+// Ou inicializa vazio, se não existe
 let postagens;  
 if (localStorage.getItem("postagens") == null) {
     postagens = [new Post(0, "Título", "Descrição", "https://external-content.duckduckgo.com/iu/?u=http%3A%2F%2Fimg3.wikia.nocookie.net%2F__cb20131128234008%2Ftotal-movies%2Fimages%2F5%2F59%2FSheriff_Woody.1.jpg&f=1&nofb=1")]
@@ -18,6 +22,7 @@ if (localStorage.getItem("postagens") == null) {
     postagens = JSON.parse(localStorage.getItem("postagens"))
 }
 
+// Função para renderizar o conteúdo da session, onde as postagens são exibidas
 function renderizaSection(postagens) {
     let htmlDaSection = "";
 
@@ -38,8 +43,10 @@ function renderizaSection(postagens) {
     document.querySelector("#sectionPostagens").innerHTML = htmlDaSection;
 }
 
+// Chama a função renderizaSection para quando a página é atualizada
 renderizaSection(postagens);
 
+// Lógica de criação de novos posts e gravação no local storage
 inputEnvioReferencia.addEventListener("click", event => {
     event.preventDefault();
 
@@ -55,6 +62,7 @@ inputEnvioReferencia.addEventListener("click", event => {
     renderizaSection(postagens);
 })
 
+// Função para deletar as postagens. Usa a ID do post para deletá-lo do local storage
 handleDelete = (event) => {
     let idDoPost = parseInt(event.path[0].id);
     let index = postagens.findIndex((el) => el.id === idDoPost)
